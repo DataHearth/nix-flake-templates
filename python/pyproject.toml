@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "my_package"
+dynamic = ["version"]
+authors = [
+    {name = "Antoine Langlois", email = "dev@antoine-langlois.net"},
+]
+description = "My package description"
+requires-python = ">=3.11"
+readme = "README.md"
+license = { file = "LICENSE" }
+dependencies = []
+
+[project.optional-dependencies]
+
+[project.scripts]
+my_package = "my_package:cli"
