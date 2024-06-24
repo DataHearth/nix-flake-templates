@@ -5,21 +5,15 @@
 
   outputs = { nixpkgs, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-        };
-      in
-      {
+      let pkgs = import nixpkgs { inherit system; };
+      in {
         devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            python3
-          ];
+          buildInputs = with pkgs; [ python3 ];
 
-          packages = with pkgs; [ 
-            (python3.withPackages (pypkgs: with pypkgs; [
-            ]))
-          ];
+          # packages = with pkgs; [ 
+          #   (python3.withPackages (pypkgs: with pypkgs; [
+          #   ]))
+          # ];
         };
       });
 }
