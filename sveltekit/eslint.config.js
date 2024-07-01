@@ -37,3 +37,4 @@ export default tseslint.config(
   pluginJs.configs.recommended,
   eslintConfigPrettier
 );
+
