@@ -19,12 +19,7 @@
         pkgs = import nixpkgs { inherit system overlays; };
       in
       {
-        devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            rust-bin.stable.latest.default
-            pkg-config
-          ];
-        };
+        devShells.default = pkgs.mkShell { packages = with pkgs; [ rust-bin.stable.latest.default ]; };
       }
     );
 }
