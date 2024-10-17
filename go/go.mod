@@ -1,3 +1,3 @@
-module gitea.antoine-langlois.net/datahearth/package
+module github.com/datahearth/package
 
-go 1.22
+go 1.23
