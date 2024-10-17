@@ -12,13 +12,7 @@
         pkgs = import nixpkgs { inherit system; };
       in
       {
-        devShells.default = pkgs.mkShell {
-          packages = with pkgs; [
-            nodejs_22
-            nodePackages_latest.eslint
-            nodePackages_latest.prettier
-          ];
-        };
+        devShells.default = pkgs.mkShell { packages = with pkgs; [ nodejs_22 ]; };
       }
     );
 }

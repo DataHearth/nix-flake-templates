@@ -16,8 +16,6 @@
           typescript = with pkgs; [
             nodejs_22
             typescript
-            nodePackages_latest.eslint
-            nodePackages_latest.prettier
           ];
         };
       }

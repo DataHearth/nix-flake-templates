@@ -11,14 +11,7 @@
         pkgs = import nixpkgs { inherit system; };
       in
       {
-        devShells.default = pkgs.mkShell {
-          packages = with pkgs; [
-            go
-            go-tools
-            gofumpt
-            delve
-          ];
-        };
+        devShells.default = pkgs.mkShell { packages = with pkgs; [ go ]; };
       }
     );
 }
