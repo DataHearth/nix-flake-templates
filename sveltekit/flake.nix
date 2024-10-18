@@ -12,12 +12,7 @@
         pkgs = import nixpkgs { inherit system; };
       in
       {
-        devShells.default = pkgs.mkShell {
-          packages = with pkgs; [
-            nodejs_22
-            typescript
-          ];
-        };
+        devShells.default = pkgs.mkShell { packages = with pkgs; [ nodejs_22 ]; };
       }
     );
 }
