@@ -1,40 +1,43 @@
-import pluginJs from '@eslint/js';
-import tseslint from 'typescript-eslint';
-import eslintPluginSvelte from 'eslint-plugin-svelte';
-import eslintConfigPrettier from 'eslint-config-prettier';
-import svelteParser from 'svelte-eslint-parser';
 import globals from 'globals';
+import js from '@eslint/js';
+import tseslint from 'typescript-eslint';
+
+// Svelte modules
+import svelteEslintParser from 'svelte-eslint-parser';
+import eslintPluginSvelte from 'eslint-plugin-svelte';
+
+// Prettier modules
+import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default tseslint.config(
-  {
-    languageOptions: {
-      globals: {
-        ...globals.browser,
-        ...globals.node
-      },
-      parserOptions: {
-        project: 'tsconfig.json',
-        extraFileExtensions: ['.svelte']
-      },
-      parser: tseslint.parser
-    }
-  },
-  {
-    languageOptions: {
-      parserOptions: {
-        parser: '@typescript-eslint/parser'
-      },
-      parser: svelteParser
-    },
-    files: ['**/*.svelte', '*.svelte']
-  },
-  {
-    ignores: ['build/', '.svelte-kit/', 'dist/', '*.config.js', '.direnv', '.env', '.env.*']
-  },
+  js.configs.recommended,
+  eslintConfigPrettier,
   ...tseslint.configs.recommended,
   ...eslintPluginSvelte.configs['flat/recommended'],
   ...eslintPluginSvelte.configs['flat/prettier'],
-  pluginJs.configs.recommended,
-  eslintConfigPrettier
-);
 
+  {
+    ignores: ['build/', '.svelte-kit/', 'dist/', '*.config.js', '.direnv', '.env', '.env.*']
+  },
+
+  {
+    languageOptions: {
+      globals: { ...globals.browser, ...globals.node },
+      parser: tseslint.parser,
+      parserOptions: {
+        project: ['tsconfig.json', 'tsconfig.node.json'],
+        extraFileExtensions: ['.svelte']
+      }
+    }
+  },
+
+  {
+    files: ['**/*.svelte', '*.svelte'],
+    languageOptions: {
+      parser: svelteEslintParser,
+      parserOptions: {
+        parser: tseslint.parser
+      }
+    }
+  }
+);
