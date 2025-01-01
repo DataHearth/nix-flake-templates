@@ -1,2 +1,5 @@
 pnpm-lock.yaml
 flake.lock
+Cargo.lock
+go.mod
+package-lock.json
