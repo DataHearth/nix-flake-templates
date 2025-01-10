@@ -10,33 +10,59 @@ import eslintPluginSvelte from 'eslint-plugin-svelte';
 import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default tseslint.config(
-  js.configs.recommended,
   eslintConfigPrettier,
-  ...tseslint.configs.recommended,
-  ...eslintPluginSvelte.configs['flat/recommended'],
-  ...eslintPluginSvelte.configs['flat/prettier'],
 
   {
-    ignores: ['build/', '.svelte-kit/', 'dist/', '*.config.js', '.direnv', '.env', '.env.*']
+    ignores: ['.svelte-kit/']
   },
 
   {
+    files: ['src/**/*.svelte', 'src/**/*.ts'],
+    extends: [
+      ...tseslint.configs.recommended,
+      eslintPluginSvelte.configs['flat/recommended'],
+      eslintPluginSvelte.configs['flat/prettier']
+    ],
     languageOptions: {
       globals: { ...globals.browser, ...globals.node },
-      parser: tseslint.parser,
+      parser: svelteEslintParser,
       parserOptions: {
-        project: ['tsconfig.json', 'tsconfig.node.json'],
+        parser: tseslint.parser,
+        project: 'tsconfig.json',
         extraFileExtensions: ['.svelte']
       }
     }
   },
 
   {
-    files: ['**/*.svelte', '*.svelte'],
+    files: ['**/*.cjs'],
+    ignores: ['src/**'],
     languageOptions: {
-      parser: svelteEslintParser,
       parserOptions: {
-        parser: tseslint.parser
+        sourceType: 'commonjs'
+      }
+    }
+  },
+
+  {
+    files: ['**/*.js', '**/*.cjs'],
+    ignores: ['src/**'],
+    extends: [js.configs.recommended],
+    languageOptions: {
+      globals: globals.node,
+      parser: js.parser
+    }
+  },
+
+  {
+    files: ['**/*.ts'],
+    ignores: ['src/**'],
+    extends: [...tseslint.configs.recommended],
+    languageOptions: {
+      globals: globals.node,
+      parser: tseslint.parser,
+      parserOptions: {
+        project: 'tsconfig.json'
       }
     }
   }
