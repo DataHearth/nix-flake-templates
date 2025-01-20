@@ -1,5 +1,10 @@
 pnpm-lock.yaml
-flake.lock
-Cargo.lock
-go.mod
 package-lock.json
+
+flake.lock
+
+/rust/Cargo.lock
+
+/go/go.mod
+
+/python/uv.lock

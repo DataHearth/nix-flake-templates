@@ -5,19 +5,33 @@
   };
 
   outputs =
-    inputs@{ flake-parts, ... }:
+    inputs@{
+      flake-parts,
+      ...
+    }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       flake = { };
       systems = [ "x86_64-linux" ];
       perSystem =
-        { pkgs, ... }:
+        { pkgs, lib, ... }:
         {
           devShells.default = pkgs.mkShell {
             packages = with pkgs; [
               python3
-              #   (python3.withPackages (pypkgs: with pypkgs; [
-              #   ]))
+              uv
             ];
+
+            env =
+              {
+                UV_PYTHON_DOWNLOADS = "never";
+                UV_PYTHON = pkgs.python3.interpreter;
+              }
+              // lib.optionalAttrs pkgs.stdenv.isLinux {
+                LD_LIBRARY_PATH = lib.makeLibraryPath pkgs.pythonManylinuxPackages.manylinux1;
+              };
+            shellHook = ''
+              unset PYTHONPATH
+            '';
           };
         };
     };
