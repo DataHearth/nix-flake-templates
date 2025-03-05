@@ -29,6 +29,10 @@
           path = ./svelte;
           description = "A Svelte template with Typescript support, Tailwindcss and routify for routing. Eslint and Prettier are already configured";
         };
+        deno = {
+          path = ./deno;
+          description = "A basic deno template";
+        };
       };
     };
 }
