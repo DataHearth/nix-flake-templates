@@ -33,6 +33,10 @@
           path = ./deno;
           description = "A basic deno template";
         };
+        basic = {
+          path = ./basic;
+          description = "A basic template with a nix-devenv";
+        };
       };
     };
 }
