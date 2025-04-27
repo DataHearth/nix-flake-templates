@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
@@ -13,7 +13,10 @@
         { pkgs, ... }:
         {
           devShells.default = pkgs.mkShell {
-            packages = with pkgs; [ deno ];
+            packages = with pkgs; [
+              nodejs_22
+              pnpm
+            ];
           };
         };
     };
