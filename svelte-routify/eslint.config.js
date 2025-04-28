@@ -1,11 +1,10 @@
-import js from '@eslint/js';
 import globals from 'globals';
+import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 
 // Svelte modules
-import eslintPluginSvelte from 'eslint-plugin-svelte';
 import svelteEslintParser from 'svelte-eslint-parser';
-import svelteConfig from './svelte.config.js';
+import eslintPluginSvelte from 'eslint-plugin-svelte';
 
 // Prettier modules
 import eslintConfigPrettier from 'eslint-config-prettier';
@@ -14,38 +13,25 @@ export default tseslint.config(
   eslintConfigPrettier,
 
   {
-    ignores: ['dist/'],
+    ignores: ['.svelte-kit/']
   },
-  
+
   {
-    files: ['src/**/*.svelte'],
+    files: ['src/**/*.svelte', 'src/**/*.ts'],
     extends: [
       ...tseslint.configs.recommended,
       eslintPluginSvelte.configs['flat/recommended'],
-      eslintPluginSvelte.configs['flat/prettier'],
+      eslintPluginSvelte.configs['flat/prettier']
     ],
     languageOptions: {
       globals: { ...globals.browser, ...globals.node },
       parser: svelteEslintParser,
       parserOptions: {
         parser: tseslint.parser,
-        projectService: true,
-        extraFileExtensions: ['.svelte'],
-        svelteConfig,
-      },
-    },
-  },
-
-  {
-    files: ['src/**/*.ts'],
-    extends: [...tseslint.configs.recommended],
-    languageOptions: {
-      globals:  { ...globals.browser, ...globals.node },
-      parser: tseslint.parser,
-      parserOptions: {
-        projectService: true,
-      },
-    },
+        project: 'tsconfig.json',
+        extraFileExtensions: ['.svelte']
+      }
+    }
   },
 
   {
@@ -53,9 +39,9 @@ export default tseslint.config(
     ignores: ['src/**'],
     languageOptions: {
       parserOptions: {
-        sourceType: 'commonjs',
-      },
-    },
+        sourceType: 'commonjs'
+      }
+    }
   },
 
   {
@@ -64,8 +50,8 @@ export default tseslint.config(
     extends: [js.configs.recommended],
     languageOptions: {
       globals: globals.node,
-      parser: js.parser,
-    },
+      parser: js.parser
+    }
   },
 
   {
@@ -76,8 +62,8 @@ export default tseslint.config(
       globals: globals.node,
       parser: tseslint.parser,
       parserOptions: {
-        projectService: true,
-      },
-    },
+        project: 'tsconfig.json'
+      }
+    }
   }
 );

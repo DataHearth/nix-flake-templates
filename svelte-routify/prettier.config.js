@@ -9,6 +9,4 @@ export default {
   plugins: [prettierPluginSvelte, prettierPluginTailwindcss],
   overrides: [{ files: '*.svelte', options: { parser: 'svelte' } }],
   tailwindFunctions: ['clsx'],
-  tailwindStylesheet: './src/app.css',
-  tailwindConfig: './tailwind.config.js',
 };

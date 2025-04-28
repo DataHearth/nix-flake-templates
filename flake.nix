@@ -25,9 +25,13 @@
           path = ./sveltekit;
           description = "SvelteKit template with Typescript support and tooling enabled";
         };
+        svelte-routify = {
+          path = ./svelte-routify;
+          description = "A Svelte template with Typescript support, Tailwindcss and routify for routing. Eslint and Prettier are already configured";
+        };
         svelte = {
           path = ./svelte;
-          description = "A Svelte template with Typescript support, Tailwindcss and routify for routing. Eslint and Prettier are already configured";
+          description = "A Svelte template with Typescript support, Tailwindcss and routing. Eslint and Prettier are already configured";
         };
         deno = {
           path = ./deno;

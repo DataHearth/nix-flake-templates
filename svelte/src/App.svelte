@@ -1,8 +1,12 @@
-<script context="module" lang="ts">
-  import { Router, createRouter } from '@roxi/routify';
-  import routes from '../.routify/routes.default.js';
-
-  export const router = createRouter({ routes });
+<script lang="ts">
+  import './app.css';
 </script>
 
-<Router {router} />
+<h1 class="text-3xl font-bold underline">Hello world!</h1>
+
+<style lang="postcss">
+  @reference "tailwindcss";
+  :global(html) {
+    background-color: theme(--color-gray-100);
+  }
+</style>
