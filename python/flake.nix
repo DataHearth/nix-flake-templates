@@ -10,7 +10,6 @@
       ...
     }:
     flake-parts.lib.mkFlake { inherit inputs; } {
-      flake = { };
       systems = [ "x86_64-linux" ];
       perSystem =
         { pkgs, lib, ... }:
@@ -19,6 +18,7 @@
             packages = with pkgs; [
               python3
               uv
+              pre-commit
             ];
 
             env =

@@ -1,0 +1,45 @@
+version: "2"
+
+formatters:
+  enable:
+    - gofumpt
+    - golines
+
+  exclusions:
+    generated: lax
+
+  settings:
+    golines:
+      max-len: 85
+
+linters:
+  default: standard
+
+  enable:
+    - unparam
+    - unconvert
+    - modernize
+    - prealloc
+
+  settings:
+    unparam:
+      check-exported: true
+
+  exclusions:
+    generated: lax
+    rules:
+      - linters:
+          - errcheck
+        source: defer .*\.Close\(.*\)
+      - linters:
+          - errcheck
+        source: os\.Remove\(.*\)
+        path: .*_test.go$
+      - linters:
+          - errcheck
+        source: .*\.Close\(\)
+        path: .*_test.go$
+      - linters:
+          - errcheck
+        source: os\.(Setenv|Unsetenv)\(.*\)
+        path: .*_test.go$

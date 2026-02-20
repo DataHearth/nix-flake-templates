@@ -1,2 +1,5 @@
 /.direnv
-
+/bin/
+/dist/
+*.exe
+*.out

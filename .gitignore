@@ -1,11 +1,8 @@
 pnpm-lock.yaml
 package-lock.json
-deno.lock
 
 flake.lock
 
 /rust/Cargo.lock
-
-/go/go.mod
 
 /python/uv.lock

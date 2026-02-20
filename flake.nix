@@ -17,25 +17,13 @@
           path = ./go;
           description = "Basic go template";
         };
-        node = {
-          path = ./node;
-          description = "Basic NodeJS template";
+        typescript = {
+          path = ./typescript;
+          description = "Basic TypeScript template with Biome";
         };
         sveltekit = {
           path = ./sveltekit;
           description = "SvelteKit template with Typescript support and tooling enabled";
-        };
-        svelte-routify = {
-          path = ./svelte-routify;
-          description = "A Svelte template with Typescript support, Tailwindcss and routify for routing. Eslint and Prettier are already configured";
-        };
-        svelte = {
-          path = ./svelte;
-          description = "A Svelte template with Typescript support, Tailwindcss and routing. Eslint and Prettier are already configured";
-        };
-        deno = {
-          path = ./deno;
-          description = "A basic deno template";
         };
         basic = {
           path = ./basic;

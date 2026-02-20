@@ -1,0 +1,13 @@
+{
+  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
+  "files": {
+    "includes": ["**", "!.svelte-kit/"]
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2
+  },
+  "linter": {
+    "enabled": true
+  }
+}
