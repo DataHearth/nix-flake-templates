@@ -1,13 +1,21 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    rust-overlay.url = "github:oxalica/rust-overlay";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     flake-parts.url = "github:hercules-ci/flake-parts";
+    devshell = {
+      url = "github:numtide/devshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
     inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [ inputs.devshell.flakeModule ];
       systems = [ "x86_64-linux" ];
       perSystem =
         { pkgs, system, ... }:
@@ -33,12 +41,18 @@
             touch $out
           '';
 
-          devShells.default = pkgs.mkShell {
-            packages = with pkgs; [
-              rust-bin.stable.latest.default
-              pre-commit
-            ];
-          };
+          devshells.default.commands = [
+            {
+              name = "cargo";
+              help = "Rust stable toolchain";
+              package = pkgs.rust-bin.stable.latest.default;
+            }
+            {
+              name = "lint";
+              help = "run cargo clippy";
+              command = "cargo clippy --all-targets -- -D warnings";
+            }
+          ];
         };
     };
 }

@@ -2,16 +2,21 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    devshell = {
+      url = "github:numtide/devshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
     inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [ inputs.devshell.flakeModule ];
       systems = [ "x86_64-linux" ];
       perSystem =
         { pkgs, self', ... }:
         {
-          packages.default = pkgs.buildGoModule {
+          packages.default = pkgs.buildGoLatestModule {
             pname = "my-module";
             version = "0.1.0";
             src = ./.;
@@ -22,7 +27,7 @@
             build = self'.packages.default;
             lint = pkgs.runCommandLocal "check-golangci-lint" {
               nativeBuildInputs = with pkgs; [
-                go
+                go_latest
                 golangci-lint
               ];
             } ''
@@ -37,13 +42,15 @@
             '';
           };
 
-          devShells.default = pkgs.mkShell {
-            packages = with pkgs; [
-              go
-              golangci-lint
-              pre-commit
-            ];
-          };
+          devshells.default.commands = [
+            { package = pkgs.go_latest; }
+            { package = pkgs.golangci-lint; }
+            {
+              name = "lint";
+              help = "run golangci-lint";
+              command = "golangci-lint run";
+            }
+          ];
         };
     };
 }

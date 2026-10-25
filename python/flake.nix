@@ -2,36 +2,45 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    devshell = {
+      url = "github:numtide/devshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    inputs@{
-      flake-parts,
-      ...
-    }:
+    inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [ inputs.devshell.flakeModule ];
       systems = [ "x86_64-linux" ];
       perSystem =
         { pkgs, lib, ... }:
         {
-          devShells.default = pkgs.mkShell {
-            packages = with pkgs; [
-              python3
-              uv
-              pre-commit
+          devshells.default = {
+            commands = [
+              { package = pkgs.python3; }
+              { package = pkgs.uv; }
+              { package = pkgs.ruff; }
             ];
 
-            env =
+            env = [
               {
-                UV_PYTHON_DOWNLOADS = "never";
-                UV_PYTHON = pkgs.python3.interpreter;
+                name = "UV_PYTHON_DOWNLOADS";
+                value = "never";
               }
-              // lib.optionalAttrs pkgs.stdenv.isLinux {
-                LD_LIBRARY_PATH = lib.makeLibraryPath pkgs.pythonManylinuxPackages.manylinux1;
-              };
-            shellHook = ''
-              unset PYTHONPATH
-            '';
+              {
+                name = "UV_PYTHON";
+                value = pkgs.python3.interpreter;
+              }
+              {
+                name = "PYTHONPATH";
+                unset = true;
+              }
+            ]
+            ++ lib.optional pkgs.stdenv.hostPlatform.isLinux {
+              name = "LD_LIBRARY_PATH";
+              value = lib.makeLibraryPath pkgs.pythonManylinuxPackages.manylinux1;
+            };
           };
         };
     };

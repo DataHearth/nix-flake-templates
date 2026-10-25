@@ -1,7 +1,7 @@
 {
   "$schema": "https://biomejs.dev/schemas/latest/schema.json",
   "files": {
-    "includes": ["**", "!.svelte-kit/"]
+    "includes": ["**", "!**/.svelte-kit"]
   },
   "formatter": {
     "indentStyle": "space",
@@ -9,5 +9,18 @@
   },
   "linter": {
     "enabled": true
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["**/*.svelte"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnusedVariables": "off",
+            "noUnusedImports": "off"
+          }
+        }
+      }
+    }
+  ]
 }
